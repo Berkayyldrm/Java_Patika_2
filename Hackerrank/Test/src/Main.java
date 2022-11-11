@@ -1,4 +1,5 @@
 import java.util.Arrays;
+import java.util.HashSet;
 
 public class Main {
     public static void main(String[] args) {
@@ -10,5 +11,6 @@ public class Main {
         test3 = Arrays.copyOf(test2, 10);
         System.out.println(Arrays.toString(test3));
         System.out.println(test3.length);
+        HashSet<Integer> hset = new HashSet<>();
     }
 }
