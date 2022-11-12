@@ -24,16 +24,17 @@ class Student {
     }
 }
 class Priorities {
-    Student students;
     Queue<String> queue;
     public Priorities() {
-         this.queue = new LinkedList<>();
+        this.queue = new LinkedList<>();
     }
     public void addQueue(String str) {
         this.queue.add(str);
     }
 
-    public Comparator<Student> anonymousClass() {
+    public List<Student> getStudents(List<String> events) {
+        List<Student> listStudent = new ArrayList<>();
+
         Comparator<Student> orderStudents = new Comparator<>() {
             @Override
             public int compare(Student t1, Student t2) {
@@ -41,23 +42,20 @@ class Priorities {
                 else if (t1.getCgpa() > t2.getCgpa()) return -1;
                 else {
                     int temp = t1.getName().compareTo(t2.getName());
-                    if(temp==-1) return 1;
-                    else if (temp==1) return -1;
+                    if(temp>0) return 1;
+                    else if (temp<0) return -1;
                     else {
-                        if(t1.getId() > t2.getId()) return 1;
-                        else return -1;
+                        if(t1.getId() > t2.getId()) return -1;
+                        else return 1;
                     }
                 }
             }
         };
-        return orderStudents;
-    }
-    public List<Student> getStudents(List<String> events) {
-        List<Student> listStudent = new ArrayList<>();
-        Comparator<Student> orderStudents = anonymousClass();
+
+
         PriorityQueue<Student> queueStudent = new PriorityQueue<>(orderStudents);
         for (String str:
-             events) {
+                events) {
             String[] tempStr = str.split(" ");
             if (tempStr[0].equals("ENTER")) {
                 queueStudent.add(new Student(Integer.parseInt(tempStr[3]), tempStr[1], Double.parseDouble(tempStr[2])));
@@ -70,9 +68,6 @@ class Priorities {
         return listStudent;
     }
 
-    public void setStudents(Student students) {
-        this.students = students;
-    }
 }
 
 public class Main {
